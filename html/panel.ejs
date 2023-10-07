@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta content="Isla Panel" property="og:title" />
+        <meta author="Ugi" property="og:author" />
+        <meta content="#2200dd" data-react-helmet="true" name="theme-color" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <title>Isla Panel</title>
+        <style>
+            html {
+                /* To make use of full height of page*/
+                min-height: 100vh;
+                margin: 0;
+                overflow: hidden;
+                background-color: #1b1b1b;
+            }
+            
+            body {
+                min-height: 100vh;
+                margin: 0;
+                text-align: center;
+                background-color: #1b1b1b;
+            }
+
+            .button, .logout {
+                position: relative;
+                display: inline-block;
+                top: 50px;
+                border-radius: 4px;
+                background-color: #ae27ff;
+                border: none;
+                color: #FFFFFF;
+                text-align: center;
+                font-size: 28px;
+                padding: 20px;
+                transition: all 0.5s;
+                cursor: pointer;
+                margin: 5px;
+            }
+
+            .container {
+                position: relative;
+                top: 30vh;
+                color: white;
+            }
+
+            .logout {
+                position: absolute;
+                top: 0;
+                right: 0;
+            }
+
+            #steamRow {
+                display: flex;
+                flex-direction: row;
+                text-align: center;
+                justify-content: center;
+            }
+
+            .steamIcon {
+                position: relative;
+                text-align: center;
+                top: 10px;
+                left: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>
+                <strong>Welcome, <%= data.dbuser.discordObj.global_name %></strong>
+            </h1>
+            <%if(data.dbuser.steamID !== null){%>
+                <div id="steamRow">
+                    <h1>
+                        <strong>You're registered with <%= data.dbuser.steamObj._json.personaname %></strong>
+                    </h1>
+                    <img src= "<%= data.dbuser.steamObj.avatar.medium %>" style="width: 50px; height: 50px;" class="steamIcon">
+                </div>
+                <p>Your Steam64ID: <%=data.dbuser.steamID%></p>
+            <%}%>
+            <a href="/api/steam/<%= data.dbuser.steamID !== null ? "unlink" : "link" %>">
+                <button href="/api/steam/link" class="button" style="vertical-align:middle;">
+                    <% if (data.dbuser.steamID !== null) { %>
+                        <span style="color:#800000;font-size:30pt; width: fit-content;" class="notHover"> &#x2718;</span>
+                        <span style="width: 250px;">
+                            Unlink Steam
+                        </span>
+                    <% } else { %>
+                        <img src="https://i.imgur.com/Hi6AjuM.png" style="height: 50px; width: 50px;">
+                        <span style="width: 250px;">
+                            Link Steam
+                        </span>
+                    <% } %>
+                </button>
+            </a>
+        </div>
+        <a href="/logout">
+            <button class="logout">
+                <span style="width: 150px;">
+                    Logout
+                </span>
+            </button>
+        </a>
+    </body>
+</html>
